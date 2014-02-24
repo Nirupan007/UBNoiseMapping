@@ -16,7 +16,7 @@
 // This example creates circles on the map, representing
 // noises in UB Campus.
 
-// First, create an object containing LatLng and population for each noise location.
+// First, create an object containing LatLng and noise value for each noise location.
 var noisemap = {};
 noisemap['l1'] = {
   center: new google.maps.LatLng(43.0075,-78.7680),
@@ -43,8 +43,8 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 
-  // Construct the circle for each value in citymap.
-  // Note: We scale the population by a factor of 20.
+  // Construct the circle for each value in noisemap.
+  // Note: We scale the noise value by a factor of 20.
   for (var noise in noisemap) {
     var noiseOptions = {
       strokeColor: '#FF0000',
@@ -56,7 +56,7 @@ function initialize() {
       center: noisemap[noise].center,
       radius: noisemap[noise].population / 20
     };
-    // Add the circle for this city to the map.
+    // Add the circle for this noise location to the map.
     noiseCircle = new google.maps.Circle(noiseOptions);
   }
 }
