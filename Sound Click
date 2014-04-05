@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+  <title>Google Maps Multiple Markers</title> 
+  <script src="http://maps.google.com/maps/api/js?sensor=false" 
+          type="text/javascript"></script>
+</head> 
+<body>
+  <div id="map" style="width: 500px; height: 400px;"></div>
+
+  <script type="text/javascript">
+    var locations = [
+      ['Shuttle Stop', 43.0000, -78.7894, 1],
+      ['Car Park', 42.9990, -78.7902, 2],
+      ['Capen Hall', 43.0008, -78.78955, 3],
+      ['Hochester Hall', 43.0004, -78.79076, 4],
+      ['Talbert Hall', 43.0007, -78.7905, 5]
+    ];
+
+
+    var hochestercl = [
+      ['hclass1', 43.0002, -78.7906, 1],
+      ['hclass2', 43.00008, -78.79051, 2],
+      ['hclass3', 43.00008, -78.79085, 3],
+      ['hclass4', 43.0002, -78.79093, 4],
+      ['hclass5', 43.0000, -78.7906, 5]
+    ];
+	
+	var sounds = ["http://mm1.ellieirons.com/wp-content/uploads/2012/03/beeps_bubbles.mp3",
+              "http://mm1.ellieirons.com/wp-content/uploads/2012/03/beeps_bubbles2.mp3"];
+			  
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 18,
+      center: new google.maps.LatLng(43.0000,-78.7900),
+      mapTypeId: google.maps.MapTypeId.HYBRID
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+    
+	var image=new google.maps.MarkerImage(
+	  'beachflag.png'
+		//new google.maps.Size(40,35),
+		//new google.maps.Point(0,0),
+		//new google.maps.Point(0,35)
+	);
+
+    var  marker,i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker(
+	 
+	  {
+        
+		position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+		 marker.sound = sounds[i];
+      });
+
+
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+		  var playing = sm2.toggle(this.sound, true);
+		 if (playing) {
+          this.setIcon(newimage);
+			} else {
+           this.setIcon(image);
+   }
+		  //marker.setInfoBubble("Hey");
+        }
+      })(marker, i));
+    }
+//---------------------------------
+    for (i = 0; i < hochestercl.length; i++) {  
+      marker = new google.maps.Marker(
+	 
+	  {
+        icon: image,
+		position: new google.maps.LatLng(hochestercl[i][1], hochestercl[i][2]),
+        map: map
+      });
+
+
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(hochestercl[i][0]);
+          infowindow.open(map, marker);
+		  //marker.setInfoBubble("Hey");
+        }
+      })(marker, i));
+    }
+
+
+
+  </script>
+</body>
+</html>
