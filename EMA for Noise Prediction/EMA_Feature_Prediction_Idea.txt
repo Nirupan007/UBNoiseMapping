@@ -1,0 +1,25 @@
+Indicators can be any of the following: 
+ 
+Moving Average (MA) : The average of the past n values till today. 
+Exponential Moving Average (EMA) : Gives more weightage to the most recent values 
+while not discarding the older observation entirely. 
+Rate of Change (ROC) : The ratio of the current price to the price n quotes earlier. 
+n is generally 5 to 10 days. 
+Relative Strength Index (RSI): Measures the relative size of recent upward trends against 
+the size of downward trends within the specified time interval (usually 9 – 14 days). 
+ 
+For this Project, the EMA was considered as the primary indicator because of its ability 
+to handle an almost infinite amount of past data, a trait that is very valuable in time series 
+prediction (It is worth noting that the application of other indicators might result in better 
+prediction accuracies for the stocks under consideration). 
+ 
+EMA (t) = EMA (t-1) + alpha * (Price (t) - EMA (t-1)) 
+ 
+Where, alpha = 2/ (N+1), Thus, for N=9, alpha = 0.20 
+ 
+ 
+In theory, the Stock Prediction Problem can be considered as evaluating a function F at 
+time T based on the previous values of F at times t-1,t-2,t-n while assigning 
+corresponding weight function w at each point to F. 
+ 
+F (t) = w1*F (t-1) + w2*F (t-2) + … + w*F (t-n)
