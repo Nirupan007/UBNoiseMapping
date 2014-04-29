@@ -1,0 +1,48 @@
+Calculating Exponential Moving Average - Steps
+Exponetial Moving Average (EMA for short) is one of the most used indicators in technical analysis today. But how do you calculate it for yourself, using a paper and a pen or – preferred – a spreadsheet program of your choice. Let’s find out in this explanation of EMA calculation.
+
+
+ 
+Calculating Exponential Moving Average (EMA) is of course done automatically by most trading and technical analysis software out there today.
+
+Here is how to calculate it manually which also adds to the understanding on how it works.
+
+In this example we shall calculate EMA for a the noise level for a given zone. We want a 22 day EMA which is a common enough time frame for a long EMA.
+
+The formula for calculating EMA is as follows:
+
+EMA = Noise(t) * k + EMA(y) * (1 – k)
+t = today, y = yesterday, N = number of days in EMA, k = 2/(N+1)
+
+Use the following steps to calculate a 22 day EMA:
+
+1) Start by calculating k for the given timeframe. 2 / (22 + 1) = 0,0869
+
+2) Add the closing noise values for the first 22 days together and divide them by 22.
+
+3) You’re now ready to start getting the first EMA day by taking the following day’s (day 23) closing noise value multiplied by k, then multiply the previous day’s moving average by (1-k) and add the two.
+
+4) Do step 3 over and over for each day that follows to get the full range of EMA.
+
+This can of course be put into Excel or some other spreadsheet software to make the process of calculating EMA semi-automatic.
+
+To give you an algorithmic view on how this can be accomplished, see below.
+
+public float CalculateEMA(float todaysNoise, float numberOfDays, float EMAYesterday){
+float k = 2 / (numberOfDays + 1);
+return todaysNNoise * k + EMAYesterday * (1 – k);
+}
+
+This method would typically be called from a loop through your data, looking something like this:
+
+foreach (DailyRecord sdr in DataRecords){
+//call the EMA calculation
+ema = CalculateEMA(sdr.Close, numberOfDays, yesterdayEMA);
+//put the calculated ema in an array
+m_emaSeries.Items.Add(sdr.TradingDate, ema);
+//make sure yesterdayEMA gets filled with the EMA we used this time around
+yesterdayEMA = ema;
+}
+Note that this is psuedo code. You would typically need to send the yesterday CLOSE value as yesterdayEMA until the yesterdayEMA is calculated from today’s EMA. That’s happening only after the loop has run more days than the number of days you have calculated your EMA for.
+
+For a 22 day EMA, it’s only on the 23 time in the loop and thereafter that the yesterdayEMA = ema is valid. This is no big deal, since you will need data from at least 100 trading days for a 22 day EMA to be valid.
