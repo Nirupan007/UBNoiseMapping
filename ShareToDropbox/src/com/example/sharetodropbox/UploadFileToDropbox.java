@@ -31,7 +31,7 @@ public class UploadFileToDropbox extends AsyncTask<Void, Void, Boolean> {
         try {
             tempFile = File.createTempFile("file", ".txt", tempDir);
             fr = new FileWriter(tempFile);
-            fr.write("Sample text file created for demo purpose. You may use some other file format for your app ");
+            fr.write("Sample");
             fr.close();
  
             FileInputStream fileInputStream = new FileInputStream(tempFile);
